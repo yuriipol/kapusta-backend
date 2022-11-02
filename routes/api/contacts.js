@@ -26,4 +26,10 @@ router.put(
   ctrlWrapper(ctrl.updateContact)
 );
 
+router.patch(
+  "/:contactId/favorite",
+  validateBody(schemas.favoriteSchema),
+  ctrlWrapper(ctrl.updateStatusContact)
+);
+
 module.exports = router;
