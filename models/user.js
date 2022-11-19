@@ -22,6 +22,11 @@ const userSchema = new Schema(
       required: true,
       minlength: 6,
     },
+    subscription: {
+      type: String,
+      enum: ["starter", "pro", "business"],
+      default: "starter",
+    },
     token: {
       type: String,
       default: "",
@@ -43,9 +48,14 @@ const loginSchema = Joi.object({
   password: Joi.string().min(6).required(),
 });
 
+const updateSchema = Joi.object({
+  subscription: Joi.string().valid("starter", "pro", "business"),
+});
+
 const schemas = {
   registerSchema,
   loginSchema,
+  updateSchema,
 };
 
 const User = model("user", userSchema);

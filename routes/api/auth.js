@@ -11,25 +11,27 @@ const router = express.Router();
 
 // signup
 router.post(
-  "/register",
+  "/users/register",
   validateBody(schemas.registerSchema),
   ctrlWrapper(ctrl.register)
 );
 
 // signin
 router.post(
-  "/login",
+  "/users/login",
   validateBody(schemas.loginSchema),
   ctrlWrapper(ctrl.login)
 );
 
-router.get(
-  "/current",
+router.get("/users/current", authenticate, ctrlWrapper(ctrl.getCurrent));
+
+router.get("/users/logout", authenticate, ctrlWrapper(ctrl.logout));
+
+router.patch(
+  "/users/:userId",
   authenticate,
-  ctrlWrapper(ctrl.getCurrent)
+  validateBody(schemas.updateSchema),
+  ctrlWrapper(ctrl.updateSubscription)
 );
-
-router.get("/logout", authenticate, ctrlWrapper(ctrl.logout));
-
 
 module.exports = router;
