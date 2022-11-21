@@ -3,10 +3,15 @@ const { RequestError } = require("../../helpers");
 
 const updateStatusContact = async (req, res) => {
   const { contactId } = req.params;
+  const { _id: owner } = req.user;
 
-  const result = await Contact.findByIdAndUpdate(contactId, req.body, {
-    new: true,
-  });
+  const result = await Contact.findOneAndUpdate(
+    { _id: contactId, owner },
+    req.body,
+    {
+      new: true,
+    }
+  );
 
   if (!result) {
     throw RequestError(404);
