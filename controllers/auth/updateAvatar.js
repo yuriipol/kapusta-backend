@@ -14,15 +14,8 @@ const updateAvatar = async (req, res) => {
   const resultUpload = path.join(avatarsDir, filename);
   await fs.rename(tempUpload, resultUpload);
 
-  await Jimp.read(resultUpload)
-    .then((img) => {
-      return img
-        .resize(250, 250) // resize
-        .write(`public/avatars/${filename}`); // save
-    })
-    .catch((err) => {
-      console.error(err);
-    });
+  const resizeFile = await Jimp.read(resultUpload);
+  resizeFile.resize(250, 250).write(resultUpload);
 
   const avatarURL = path.join("avatars", filename);
   await User.findByIdAndUpdate(req.user._id, { avatarURL });
