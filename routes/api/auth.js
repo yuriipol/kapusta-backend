@@ -1,12 +1,8 @@
 const express = require("express");
 const ctrl = require("../../controllers/auth");
-
 const { ctrlWrapper } = require("../../helpers");
-
 const { validateBody, authenticate, upload } = require("../../middlewares");
-
 const { schemas } = require("../../models/user");
-
 const router = express.Router();
 
 // signup
@@ -31,7 +27,6 @@ router.post(
 );
 
 router.get("/users/current", authenticate, ctrlWrapper(ctrl.getCurrent));
-
 router.get("/users/logout", authenticate, ctrlWrapper(ctrl.logout));
 
 router.patch(
