@@ -10,7 +10,7 @@ const Income = mongoose.Schema({
     type: Number,
   },
   date: {
-    type: Date.prototype.getTime()
+    type: String,
   },
   owner: {
     type: mongoose.SchemaTypes.ObjectId,
