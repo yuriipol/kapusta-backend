@@ -4,11 +4,10 @@ const { nanoid } = require("nanoid");
 
 const { User } = require("../../models/user");
 
-const { RequestError, sendMail } = require("../../helpers");
-const { BASE_URL } = process.env;
+const { RequestError } = require("../../helpers");
 
 const register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { email, password } = req.body;
 
   const user = await User.findOne({ email });
   if (user) {
@@ -19,27 +18,16 @@ const register = async (req, res) => {
 
   const avatarURL = gravatar.url(email);
 
-  const verificationToken = nanoid();
 
   const newUser = await User.create({
-    name,
     email,
     password: hashPassword,
-    avatarURL,
-    verificationToken,
+    avatarURL
   });
 
-  const mail = {
-    to: email,
-    subject: "Подтверждение регистрации на сайте",
-    html: `<a href="${BASE_URL}/api/auth/users/verify/${verificationToken}" target="_blank" >Нажмите для подтверждения регистрации</a>`,
-  };
-  await sendMail(mail);
-
   res.status(201).json({
-    name: newUser.name,
-    subscription: newUser.subscription,
-    verificationToken: newUser.verificationToken,
+    'email': newUser.email,
+    'id': newUser._id
   });
 };
 
