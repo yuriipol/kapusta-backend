@@ -18,6 +18,10 @@ const userSchema = new Schema(
       required: true,
       minlength: 6,
     },
+    balance: {
+      type: Number,
+      default: 0,
+    },
     token: {
       type: String,
       default: "",
