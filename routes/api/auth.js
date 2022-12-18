@@ -1,7 +1,12 @@
 const express = require("express");
 const ctrl = require("../../controllers/auth");
 const { ctrlWrapper } = require("../../helpers");
-const { validateBody, authenticate, upload } = require("../../middlewares");
+const {
+  validateBody,
+  authenticate,
+  upload,
+  authenticateSocial,
+} = require("../../middlewares");
 const { schemas } = require("../../models/user");
 const router = express.Router();
 
@@ -24,6 +29,17 @@ router.post(
   "/users/login",
   validateBody(schemas.loginSchema),
   ctrlWrapper(ctrl.login)
+);
+
+router.get(
+  "/users/google",
+  authenticateSocial.authenticate("google", { scope: ["email", "profile"] })
+);
+
+router.get(
+  "/users/google/callback",
+  authenticateSocial.authenticate("google", { session: false }),
+  ctrlWrapper(ctrl.googleAuth)
 );
 
 router.get("/users/current", authenticate, ctrlWrapper(ctrl.getCurrent));
