@@ -50,6 +50,10 @@ const updateSchema = Joi.object({
   subscription: Joi.string().valid("starter", "pro", "business"),
 });
 
+const updateBalanceSchema = Joi.object({
+  balance: Joi.number(),
+});
+
 const verifyEmailSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required(),
 });
@@ -58,6 +62,7 @@ const schemas = {
   registerSchema,
   loginSchema,
   updateSchema,
+  updateBalanceSchema,
   verifyEmailSchema,
 };
 
