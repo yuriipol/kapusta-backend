@@ -74,4 +74,11 @@ router.patch(
   ctrlWrapper(ctrl.updateAvatar)
 );
 
+router.patch(
+  "/users/balance",
+  authenticate,
+  validateBody(schemas.updateBalanceSchema),
+  ctrlWrapper(ctrl.updateBalance)
+);
+
 module.exports = router;
