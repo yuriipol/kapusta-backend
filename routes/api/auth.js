@@ -36,11 +36,26 @@ router.get(
   authenticateSocial.authenticate("google", { scope: ["email", "profile"] })
 );
 
+// router.get(
+//   "/users/google/callback",
+//   authenticateSocial.authenticate("google", { session: false }),
+//   ctrlWrapper(ctrl.googleAuth)
+// );
+// ===================
+
 router.get(
   "/users/google/callback",
-  authenticateSocial.authenticate("google", { session: false }),
+
+  authenticateSocial.authenticate("google", {
+    failureMessage: "Cannot login to Google, please try again later!",
+    failureRedirect: "http://localhost:3000/login/error",
+    // successRedirect: "http://localhost:3000/home",
+    session: false,
+  }),
   ctrlWrapper(ctrl.googleAuth)
 );
+
+// ===================
 
 router.get("/users/current", authenticate, ctrlWrapper(ctrl.getCurrent));
 router.get("/users/logout", authenticate, ctrlWrapper(ctrl.logout));

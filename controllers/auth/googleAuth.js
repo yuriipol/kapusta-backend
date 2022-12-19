@@ -6,6 +6,7 @@ const { SECRET_KEY } = process.env;
 
 const googleAuth = async (req, res) => {
   const { _id, email } = req.user;
+  console.log("email-googleAuth", email);
 
   const payload = {
     id: _id,

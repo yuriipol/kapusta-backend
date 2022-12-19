@@ -10,7 +10,7 @@ const {
 } = process.env;
 
 const callbackURL = `${BASE_URL}${GOOGLE_CALLBACK_URL}`;
-console.log(callbackURL);
+// console.log(callbackURL);
 
 const googleParams = {
   clientID: GOOGLE_CLIENT_ID,
@@ -27,17 +27,18 @@ const googleCallback = async (
   done
 ) => {
   try {
-    console.log(profile);
-    // const { email, displayName } = profile;
-    const { email } = profile;
+    // console.log(profile);
+
+    const { email, picture } = profile;
     const user = await User.findOne({ email });
     if (user) {
       return done(null, user);
       // req.user = user
     }
-    // const newUser = await User.create({ email, name: displayName });
-    const newUser = await User.create({ email });
+
+    const newUser = await User.create({ email, avatarURL: picture });
     done(null, newUser);
+    // req.user = newUser
   } catch (error) {
     done(error, false);
   }
