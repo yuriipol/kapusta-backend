@@ -7,14 +7,20 @@ const { User } = require("../models/user");
 const { SECRET_KEY } = process.env;
 
 const authenticate = async (req, res, next) => {
+  console.log(req.headers);
   const { authorization = "" } = req.headers;
 
   const [bearer, token] = authorization.split(" ");
+
+  console.log(bearer);
+
   if (bearer !== "Bearer") {
     next(RequestError(401));
   }
+
   try {
     const { id } = jwt.verify(token, SECRET_KEY);
+    console.log(id);
     const user = await User.findById(id);
     if (!user || !user.token) {
       console.log("fale");

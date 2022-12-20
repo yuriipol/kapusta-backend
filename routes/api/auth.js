@@ -6,7 +6,7 @@ const {
   authenticate,
   upload,
   authenticateSocial,
-  isValidId,
+  // isValidId,
 } = require("../../middlewares");
 const { schemas } = require("../../models/user");
 const router = express.Router();
@@ -46,7 +46,7 @@ router.get(
 );
 
 router.get("/users/current", authenticate, ctrlWrapper(ctrl.getCurrent));
-router.get("/users/:contactId", isValidId, ctrlWrapper(ctrl.getUserById));
+// router.get("/users/:contactId", isValidId, ctrlWrapper(ctrl.getUserById));
 
 router.get("/users/logout", authenticate, ctrlWrapper(ctrl.logout));
 
