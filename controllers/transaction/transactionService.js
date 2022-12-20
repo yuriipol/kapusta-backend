@@ -21,7 +21,7 @@ const addTransactionIncomeService = async(data, user, owner) => {
 }
 
 const getTransactionIncomeService = async () => {
-  // const data = await TransactionModel.find({})
+  const data = await TransactionModel.find({})
 }
 
 const getTransactionExpenseService = async () => {
@@ -30,14 +30,11 @@ const getTransactionExpenseService = async () => {
 
 const deleteTransactionService = async(_id, owner, user) => {
   const transaction = await TransactionModel.findByIdAndRemove({_id, owner}, {returnDocument: 'before'});
-  console.log(transaction.amount)
   if(transaction.category === 'income'){
-    console.log('here')
     user.balance -= transaction.amount;
     await user.save();
   }
   if(transaction.category !== 'income'){
-    console.log('there')
     user.balance += transaction.amount;
     await user.save();
   }

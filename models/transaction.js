@@ -20,6 +20,9 @@ const Transaction = mongoose.Schema({
   owner: {
     type: mongoose.SchemaTypes.ObjectId,
     ref: 'user',
+  },
+  type: {
+    type: String,
   }
 });
 
