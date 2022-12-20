@@ -8,6 +8,7 @@ const updateAvatar = require("./updateAvatar");
 const verifyEmail = require("./verifyEmail");
 const resendVerifyEmail = require("./resendVerifyEmail");
 const googleAuth = require("./googleAuth");
+const getUserById = require("./getUserById");
 
 module.exports = {
   register,
@@ -20,4 +21,5 @@ module.exports = {
   verifyEmail,
   resendVerifyEmail,
   googleAuth,
+  getUserById,
 };

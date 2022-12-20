@@ -14,7 +14,7 @@ const googleAuth = async (req, res) => {
 
   const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "18h" });
   await User.findByIdAndUpdate(_id, { token });
-
+  //   res.send(`<h2>success registration</h2>`);
   res.json({
     token,
     user: {
