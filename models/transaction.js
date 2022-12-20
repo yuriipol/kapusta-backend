@@ -26,7 +26,7 @@ const Transaction = mongoose.Schema({
 const TransactionModel = mongoose.model('transactions', Transaction);
 
 
-const expenseAddSchema = Joi.object({
+const JoiTransactionExpense = Joi.object({
   description: Joi.string().min(3).max(100).required(),
   amount: Joi.number().required(),
   date: Joi.date().max("now").required(),
@@ -49,14 +49,14 @@ const expenseAddSchema = Joi.object({
     .required(),
 });
 
-const incomeSchema = Joi.object({
+const JoiTransactionIncome = Joi.object({
   description: Joi.string().min(3).max(100).required(),
   amount: Joi.number().required(),
   date: Joi.date().max('now').required()
 })
 
 module.exports = {
-  incomeSchema,
-  expenseAddSchema,
+  JoiTransactionExpense,
+  JoiTransactionIncome,
   TransactionModel
 }

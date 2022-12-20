@@ -4,8 +4,7 @@ const cors = require("cors");
 require("dotenv").config();
 
 const authRouter = require("./routes/api/auth");
-const incomeTransaction = require("./routes/transactions/incomeRoute");
-const expenseTransaction = require("./routes/transactions/expenseRoute");
+const transaction = require("./routes/transactions/transaction");
 
 const app = express();
 
@@ -17,8 +16,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 app.use("/api/auth", authRouter);
-app.use("/api/transaction", incomeTransaction);
-app.use("/api/transaction", expenseTransaction);
+app.use("/api/transaction", transaction);
 
 app.use((req, res) => {
   res.status(404).json({ message: "Not found" });
