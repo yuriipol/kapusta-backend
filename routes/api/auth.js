@@ -1,7 +1,13 @@
 const express = require("express");
 const ctrl = require("../../controllers/auth");
 const { ctrlWrapper } = require("../../helpers");
-const { validateBody, authenticate, upload } = require("../../middlewares");
+const {
+  validateBody,
+  authenticate,
+  upload,
+  authenticateSocial,
+  // isValidId,
+} = require("../../middlewares");
 const { schemas } = require("../../models/user");
 const router = express.Router();
 
@@ -26,7 +32,22 @@ router.post(
   ctrlWrapper(ctrl.login)
 );
 
+router.get(
+  "/users/google/callback",
+
+  authenticateSocial.authenticate("google", {
+    scope: ["email", "profile"],
+    failureMessage: "Cannot login to Google, please try again later!",
+    failureRedirect: "http://localhost:3000/login/error",
+    // successRedirect: "http://localhost:3000/home",
+    session: false,
+  }),
+  ctrlWrapper(ctrl.googleAuth)
+);
+
 router.get("/users/current", authenticate, ctrlWrapper(ctrl.getCurrent));
+// router.get("/users/:contactId", isValidId, ctrlWrapper(ctrl.getUserById));
+
 router.get("/users/logout", authenticate, ctrlWrapper(ctrl.logout));
 
 router.patch(
