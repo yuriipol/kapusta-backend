@@ -3,8 +3,8 @@ const Joi = require("joi");
 
 const { handleSaveErrors } = require("../helpers");
 
-const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-
+const emailRegexp =
+  /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/; // mysite@ourearth.com
 const userSchema = new Schema(
   {
     email: {
@@ -15,12 +15,8 @@ const userSchema = new Schema(
     },
     password: {
       type: String,
-      required: true,
+      default: "google registration",
       minlength: 6,
-    },
-    balance: {
-      type: Number,
-      default: 0,
     },
     token: {
       type: String,
@@ -28,7 +24,7 @@ const userSchema = new Schema(
     },
     avatarURL: {
       type: String,
-      required: true,
+      default: "//www.gravatar.com/avatar/93942e96f5acd83e2e047ad8fe03114d",
     },
   },
   { versionKey: false, timestamps: true }
