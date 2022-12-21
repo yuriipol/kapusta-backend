@@ -1,10 +1,12 @@
-const { Schema, model, SchemaTypes } = require("mongoose");
+const mongoose = require('mongoose');
 const Joi = require("joi");
 
-const expenseSchema = new Schema({
+
+
+
+const Transaction = mongoose.Schema({
   description: {
     type: String,
-    default: "Expense description",
   },
   amount: {
     type: Number,
@@ -14,29 +16,20 @@ const expenseSchema = new Schema({
   },
   category: {
     type: String,
-    enum: [
-      "Продукты",
-      "Алкоголь",
-      "Развлечения",
-      "Здоровье",
-      "Транспорт",
-      "Всё для дома",
-      "Техника",
-      "Коммуналка и связь",
-      "Спорт и хобби",
-      "Образование",
-      "Прочее",
-    ],
   },
   owner: {
-    type: SchemaTypes.ObjectId,
-    ref: "user",
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'user',
   },
+  type: {
+    type: String,
+  }
 });
 
-const Expense = model("expense", expenseSchema);
+const TransactionModel = mongoose.model('transactions', Transaction);
 
-const expenseAddSchema = Joi.object({
+
+const JoiTransactionExpense = Joi.object({
   description: Joi.string().min(3).max(100).required(),
   amount: Joi.number().required(),
   date: Joi.date().max("now").required(),
@@ -59,7 +52,14 @@ const expenseAddSchema = Joi.object({
     .required(),
 });
 
+const JoiTransactionIncome = Joi.object({
+  description: Joi.string().min(3).max(100).required(),
+  amount: Joi.number().required(),
+  date: Joi.date().max('now').required()
+})
+
 module.exports = {
-  Expense,
-  expenseAddSchema,
-};
+  JoiTransactionExpense,
+  JoiTransactionIncome,
+  TransactionModel
+}
