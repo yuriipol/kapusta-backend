@@ -1,5 +1,5 @@
 const { TransactionModel } = require('../../models/transaction');
-const {getMonthStatistic} = require('../../helpers/getMonthStatistic')
+const {getMonthStatistic, getAllStatistic} = require('../../helpers/getMonthStatistic')
 
 const addTransactionExpenseService = async(data, user, owner) => {
   user.balance -= data.amount;
@@ -21,17 +21,20 @@ const addTransactionIncomeService = async(data, user, owner) => {
   }}
 }
 
+
 const getTransactionIncomeService = async () => {
   const data = await TransactionModel.find({type: 'income'})
   const monthStats = getMonthStatistic(data);
   return {status: 200, message: {"incomes": data, monthStats}}
 }
 
+
 const getTransactionExpenseService = async () => {
   const data = await TransactionModel.find({type: 'expense'})
   const monthStats = getMonthStatistic(data);
   return {status: 200, message: {"expense": data, monthStats}}
 }
+
 
 const deleteTransactionService = async(_id, owner, user) => {
   const transaction = await TransactionModel.findByIdAndRemove({_id, owner}, {returnDocument: 'before'});
@@ -40,18 +43,23 @@ const deleteTransactionService = async(_id, owner, user) => {
   return {status: 200, message: {"newBalance": user.balance}}
 }
 
+
 const getTransactionIncomeCategoriesService = async() => {
   
 }
+
 
 const getTransactionExpenseCategoriesService = async() => {
 
 }
 
+
 const getTransactionPeriodDataService = async (date) => {
-  const transaction = await TransactionModel.find({date})
-  return {status: 200, transaction}
+  const transaction = await TransactionModel.find({date: {$gte: `${date}-01`, $lte: `${date}-31`}})
+  const calculating = getAllStatistic(transaction);
+  return {status: 200, message: calculating}
 }
+
 
 module.exports = {
   addTransactionExpenseService,

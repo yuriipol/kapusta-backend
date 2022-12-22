@@ -58,10 +58,27 @@ const getMonthStatistic = (data) => {
   }
 }
 
-const getAllStatistic = (data, date) => {
-  
+const getAllStatistic = (data) => {
+  let totalInc = 0, totalExp = 0
+  for (let i of data) {
+    if(i.type === 'income') {
+      totalInc += i.amount
+    }
+    if(i.type === 'expense') {
+      totalExp += i.amount
+    }
+  }
+  return {
+    "incomes": {
+      total: totalInc,
+    },
+    "expenses": {
+      total: totalExp,
+    }
+  }
 }
 
 module.exports = {
-  getMonthStatistic
+  getMonthStatistic,
+  getAllStatistic
 }
