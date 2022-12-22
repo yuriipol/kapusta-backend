@@ -12,7 +12,7 @@ const Transaction = mongoose.Schema({
     type: Number,
   },
   date: {
-    type: Date,
+    type: String,
   },
   category: {
     type: String,

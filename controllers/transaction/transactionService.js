@@ -50,7 +50,7 @@ const getTransactionExpenseCategoriesService = async() => {
 
 const getTransactionPeriodDataService = async (date) => {
   const transaction = await TransactionModel.find({date})
-  return {status: 200, }
+  return {status: 200, transaction}
 }
 
 module.exports = {
