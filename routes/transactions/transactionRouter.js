@@ -21,5 +21,7 @@ router.get('/income', ctrlWrapper(getIncomeController))
 router.post('/expense',[validateBody(JoiTransactionExpense)], ctrlWrapper(addExpenseController))
 router.get('/expense', ctrlWrapper(getExpenseController))
 router.delete('/:id', ctrlWrapper(deleteTransactionController))
+router.get('/income-categories', ctrlWrapper())
+router.get('/expense-categories', ctrlWrapper())
 
 module.exports = router

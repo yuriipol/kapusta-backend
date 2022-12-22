@@ -1,4 +1,5 @@
 const { TransactionModel } = require('../../models/transaction');
+const {getMonthStatistic} = require('../../helpers/getMonthStatistic')
 
 const addTransactionExpenseService = async(data, user, owner) => {
   user.balance -= data.amount;
@@ -20,14 +21,18 @@ const addTransactionIncomeService = async(data, user, owner) => {
   }}
 }
 
+
+
 const getTransactionIncomeService = async () => {
   const data = await TransactionModel.find({type: 'income'})
-  return {status: 200, message: data}
+  const monthStats = getMonthStatistic(data);
+  return {status: 200, message: {"incomes": data, monthStats}}
 }
 
 const getTransactionExpenseService = async () => {
   const data = await TransactionModel.find({type: 'expense'})
-  return {status: 200, message: data}
+  const monthStats = getMonthStatistic(data);
+  return {status: 200, message: {"expense": data, monthStats}}
 }
 
 const deleteTransactionService = async(_id, owner, user) => {
@@ -37,10 +42,20 @@ const deleteTransactionService = async(_id, owner, user) => {
   return {status: 200, message: {"newBalance": user.balance}}
 }
 
+const getTransactionIncomeCategoriesService = async() => {
+  
+}
+
+const getTransactionExpenseCategoriesService = async() => {
+
+}
+
 module.exports = {
   addTransactionExpenseService,
   addTransactionIncomeService,
   getTransactionIncomeService,
   getTransactionExpenseService,
-  deleteTransactionService
+  deleteTransactionService,
+  getTransactionIncomeCategoriesService,
+  getTransactionExpenseCategoriesService
 }
