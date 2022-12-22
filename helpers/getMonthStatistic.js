@@ -4,7 +4,7 @@
 const getMonthStatistic = (data) => {
   let tDecember = 0, tNovember = 0, tOctober = 0, tSeptember = 0, tAugust = 0, tJuly = 0, tJune = 0, tMay = 0, tApril = 0, tMarch = 0, tFebruary = 0, tJanuary = 0;
   for (let i of data) {
-    const [year, month, date] = i.date.split('-');
+    const [year, month, date] = i.date.split('-');v
     if(month === '12'){
       tDecember += i.amount;
     }
@@ -71,9 +71,15 @@ const getAllStatistic = (data) => {
   return {
     "incomes": {
       total: totalInc,
+      "incomesData": {
+
+      }
     },
     "expenses": {
       total: totalExp,
+      "incomesData": {
+        
+      }
     }
   }
 }

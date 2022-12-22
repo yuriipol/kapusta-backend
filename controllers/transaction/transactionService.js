@@ -55,7 +55,8 @@ const getTransactionExpenseCategoriesService = async() => {
 
 
 const getTransactionPeriodDataService = async (date) => {
-  const transaction = await TransactionModel.find({date: {$gte: `${date}-01`, $lte: `${date}-31`}})
+  const [year, month, day] = date.split('-');
+  const transaction = await TransactionModel.find({date: {$gte: `${year}-${month ? month : 01}-${day ? day : 01}`, $lte: `${year}-${month ? month : 12}-${day ? day: 31}`}})
   const calculating = getAllStatistic(transaction);
   return {status: 200, message: calculating}
 }
