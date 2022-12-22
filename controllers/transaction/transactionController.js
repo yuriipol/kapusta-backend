@@ -5,7 +5,8 @@ const {
   getTransactionExpenseService,
   deleteTransactionService,
   getTransactionIncomeCategoriesService,
-  getTransactionExpenseCategoriesService
+  getTransactionExpenseCategoriesService,
+  getTransactionPeriodDataService
 } = require('./transactionService');
 
 
@@ -48,6 +49,11 @@ const getTransactionExpenseCategoriesController = async (req, res) => {
 
 }
 
+const getTransactionPeriodDataController = async (req, res) => {
+  console.log(req.query);
+  const {status, message } = await getTransactionPeriodDataService(req.query.date)
+  res.status(status).json(message);
+}
 
 module.exports = {
   addIncomeController,
@@ -56,5 +62,6 @@ module.exports = {
   getExpenseController,
   deleteTransactionController,
   getTransactionIncomeCategoriesController,
-  getTransactionExpenseCategoriesController
+  getTransactionExpenseCategoriesController,
+  getTransactionPeriodDataController
 }

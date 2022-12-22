@@ -21,8 +21,6 @@ const addTransactionIncomeService = async(data, user, owner) => {
   }}
 }
 
-
-
 const getTransactionIncomeService = async () => {
   const data = await TransactionModel.find({type: 'income'})
   const monthStats = getMonthStatistic(data);
@@ -50,6 +48,11 @@ const getTransactionExpenseCategoriesService = async() => {
 
 }
 
+const getTransactionPeriodDataService = async (date) => {
+  const transaction = await TransactionModel.find({date})
+  return {status: 200, }
+}
+
 module.exports = {
   addTransactionExpenseService,
   addTransactionIncomeService,
@@ -57,5 +60,6 @@ module.exports = {
   getTransactionExpenseService,
   deleteTransactionService,
   getTransactionIncomeCategoriesService,
-  getTransactionExpenseCategoriesService
+  getTransactionExpenseCategoriesService,
+  getTransactionPeriodDataService
 }

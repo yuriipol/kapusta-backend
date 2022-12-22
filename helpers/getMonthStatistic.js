@@ -58,6 +58,10 @@ const getMonthStatistic = (data) => {
   }
 }
 
+const getAllStatistic = (data, date) => {
+  
+}
+
 module.exports = {
   getMonthStatistic
 }

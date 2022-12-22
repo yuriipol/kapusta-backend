@@ -4,7 +4,10 @@ const {
   addExpenseController,
   getIncomeController,
   getExpenseController,
-  deleteTransactionController
+  deleteTransactionController,
+  getTransactionIncomeCategoriesController,
+  getTransactionExpenseCategoriesController,
+  getTransactionPeriodDataController
 } = require("../../controllers/transaction/transactionController");
 const { ctrlWrapper } = require("../../helpers");
 const { validateBody } = require("../../middlewares");
@@ -21,7 +24,8 @@ router.get('/income', ctrlWrapper(getIncomeController))
 router.post('/expense',[validateBody(JoiTransactionExpense)], ctrlWrapper(addExpenseController))
 router.get('/expense', ctrlWrapper(getExpenseController))
 router.delete('/:id', ctrlWrapper(deleteTransactionController))
-router.get('/income-categories', ctrlWrapper())
-router.get('/expense-categories', ctrlWrapper())
+router.get('/income-categories', ctrlWrapper(getTransactionIncomeCategoriesController))
+router.get('/expense-categories', ctrlWrapper(getTransactionExpenseCategoriesController))
+router.get('/period-data', ctrlWrapper(getTransactionPeriodDataController))
 
 module.exports = router
