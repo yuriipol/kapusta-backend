@@ -27,7 +27,9 @@ const Transaction = mongoose.Schema({
 });
 
 const TransactionModel = mongoose.model('transactions', Transaction);
-
+['PRODUCTS', 'ALCOHOL', 'ENTERTAINMENT', 'HEALTH',
+ 'TRANSPORT', 'HOUSING', 'TECHNIQUE', 'COMMUNAL', 
+ 'COMMUNICATION', 'SPORTS, HOBBIES', 'EDUCATION', 'OTHER']
 
 const JoiTransactionExpense = Joi.object({
   description: Joi.string().min(3).max(100).required(),
@@ -35,19 +37,19 @@ const JoiTransactionExpense = Joi.object({
   date: Joi.date().max("now").required(),
   category: Joi.string()
     .valid(
-      "Продукты",
-      "Алкоголь",
-      "Развлечения",
-      "Здоровье",
-      "Транспорт",
-      "Всё для дома",
-      "Техника",
-      "Коммуналка и связь",
-      "Спорт и хобби",
-      "Образование",
-      "Прочее"
+      "PRODUCTS",
+      "ALCOHOL",
+      "ENTERTAINMENT",
+      "HEALTH",
+      "TRANSPORT",
+      "HOUSING",
+      "TECHNIQUE",
+      "COMMUNAL, COMMUNICATION",
+      "SPORTS, HOBBIES",
+      "EDUCATION",
+      "OTHER"
     )
-    .min(6)
+    .min(3)
     .max(100)
     .required(),
 });
@@ -55,6 +57,14 @@ const JoiTransactionExpense = Joi.object({
 const JoiTransactionIncome = Joi.object({
   description: Joi.string().min(3).max(100).required(),
   amount: Joi.number().required(),
+  category: Joi.string()
+  .valid(
+    "SALARY",
+    "INCOME",
+  )
+  .min(3)
+  .max(100)
+  .required(),
   date: Joi.date().max('now').required()
 })
 
