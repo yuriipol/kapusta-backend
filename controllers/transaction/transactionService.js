@@ -38,8 +38,14 @@ const getTransactionExpenseService = async () => {
 
 const deleteTransactionService = async(_id, owner, user) => {
   const transaction = await TransactionModel.findByIdAndRemove({_id, owner}, {returnDocument: 'before'});
-  if(transaction.type === 'income') user.balance -= transaction.amount, await user.save();
-  if(transaction.type === 'expense') user.balance += transaction.amount, await user.save();
+  if(transaction.type === 'income') {
+    user.balance -= transaction.amount
+     await user.save()
+  }
+  if(transaction.type === 'expense') {
+    user.balance += transaction.amount
+    await user.save();
+  } 
   return {status: 200, message: {"newBalance": user.balance}}
 }
 
