@@ -1,6 +1,3 @@
-
-
-
 const getMonthStatistic = (data) => {
   let tDecember = 0, tNovember = 0, tOctober = 0, tSeptember = 0, tAugust = 0, tJuly = 0, tJune = 0, tMay = 0, tApril = 0, tMarch = 0, tFebruary = 0, tJanuary = 0;
   for (let i of data) {
@@ -14,9 +11,9 @@ const getMonthStatistic = (data) => {
     if(month === '06') tJune += i.amount
     if(month === '05') tMay += i.amount
     if(month === '04') tApril += i.amount
-    if(month === '03')tMarch += i.amount
-    if(month === '02')tFebruary += i.amount
-    if(month === '01')tJanuary += i.amount
+    if(month === '03') tMarch += i.amount
+    if(month === '02') tFebruary += i.amount
+    if(month === '01') tJanuary += i.amount
   }
   return {
     "Январь": tJanuary ? tJanuary : "N/A",
@@ -37,8 +34,7 @@ const getMonthStatistic = (data) => {
 const getAllStatistic = (data) => {
   let totalInc = 0, totalExp = 0, totalSal = 0, totalIncCat = 0,
   PRODUCTS = 0, ALCOHOL = 0, ENTERTAINMENT = 0, HEALTH = 0, TRANSPORT = 0,
-  HOUSING = 0, TECHNIQUE = 0, COMMUNAL = 0, SPORTS = 0,
-  HOBBIES = 0, EDUCATION = 0, OTHER = 0
+  HOUSING = 0, TECHNIQUE = 0, COMMUNAL = 0, SPORTS = 0, EDUCATION = 0, OTHER = 0
   for (let i of data) {
     if(i.type === 'income') {
       totalInc += i.amount
@@ -51,17 +47,17 @@ const getAllStatistic = (data) => {
     }
     if(i.type === 'expense') {
       totalExp += i.amount;
-      if(i.type === 'PRODUCTS'){PRODUCTS += i.amount}
-      if(i.type === 'ALCOHOL'){ALCOHOL += i.amount}
-      if(i.type === 'ENTERTAINMENT'){ENTERTAINMENT += i.amount}
-      if(i.type === 'HEALTH'){HEALTH += i.amount}
-      if(i.type === 'TRANSPORT'){TRANSPORT += i.amount}
-      if(i.type === 'HOUSING'){HOUSING += i.amount}
-      if(i.type === 'TECHNIQUE'){TECHNIQUE += i.amount}
-      if(i.type === 'COMMUNAL, COMMUNICATION'){COMMUNAL += i.amount}
-      if(i.type === 'SPORTS, HOBBIES'){SPORTS += i.amount}
-      if(i.type === 'EDUCATION'){EDUCATION += i.amount}
-      if(i.type === 'OTHER'){OTHER += i.amount}
+      if(i.category === 'PRODUCTS') PRODUCTS += i.amount
+      if(i.category === 'ALCOHOL') ALCOHOL += i.amount
+      if(i.category === 'ENTERTAINMENT') ENTERTAINMENT += i.amount
+      if(i.category === 'HEALTH') HEALTH += i.amount
+      if(i.category === 'TRANSPORT') TRANSPORT += i.amount
+      if(i.category === 'HOUSING') HOUSING += i.amount
+      if(i.category === 'TECHNIQUE') TECHNIQUE += i.amount
+      if(i.category === 'COMMUNAL, COMMUNICATION') COMMUNAL += i.amount
+      if(i.category === 'SPORTS, HOBBIES') SPORTS += i.amount
+      if(i.category === 'EDUCATION') EDUCATION += i.amount
+      if(i.category === 'OTHER') OTHER += i.amount
     }
   }
   return {
@@ -91,7 +87,26 @@ const getAllStatistic = (data) => {
   }
 }
 
+const getNewDate = (date) => {
+  const [year, month, day] = date.split('-');
+  let lowDate, highDate;
+  if(year){
+    lowDate = `${year}-01-01`
+    highDate = `${year}-12-31`
+    if(month){
+      lowDate = `${date}-01`
+      highDate = `${date}-31`
+      if(day){
+        lowDate = date;
+        highDate = date;
+      }
+    }
+  }
+  return {lowDate, highDate}
+}
+
 module.exports = {
   getMonthStatistic,
-  getAllStatistic
+  getAllStatistic,
+  getNewDate
 }

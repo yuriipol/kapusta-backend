@@ -1,5 +1,5 @@
 const { TransactionModel } = require('../../models/transaction');
-const {getMonthStatistic, getAllStatistic} = require('../../helpers/getMonthStatistic')
+const {getMonthStatistic, getAllStatistic, getNewDate} = require('../../helpers/getMonthStatistic')
 
 const addTransactionExpenseService = async(data, user, owner) => {
   user.balance -= data.amount;
@@ -61,9 +61,10 @@ const getTransactionExpenseCategoriesService = async() => {
 
 
 const getTransactionPeriodDataService = async (date) => {
-  const [year, month, day] = date.split('-');
-  const transaction = await TransactionModel.find({date: {$gte: `${year}-${month ? month : 01}-${day ? day : 01}`, $lte: `${year}-${month ? month : 12}-${day ? day: 31}`}})
-  const calculating = getAllStatistic(transaction);
+  const {lowDate, highDate} = getNewDate(date);
+  // const transaction = await TransactionModel.find({date: {$gte: `${year}-${month ? month : 01}-${day ? day : 01}`, $lte: `${year}-${month ? month : 12}-${day ? day: 31}`}})
+  const transaction = await TransactionModel.find({date: {$gte: `${lowDate}`, $lte: `${highDate}`}})
+  const calculating = getAllStatistic(transaction)
   return {status: 200, message: calculating}
 }
 
