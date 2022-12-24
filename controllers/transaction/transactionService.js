@@ -1,12 +1,12 @@
 const { TransactionModel } = require('../../models/transaction');
-const {getMonthStatistic, getAllStatistic, getNewDate} = require('../../helpers/getMonthStatistic');
+const {getMonthStatistic,  getAllStatistic, getNewDate, getMonthlyStatistics} = require('../../helpers/getMonthStatistic');
 const { incCategories, expCategories } = require('../../helpers/categories');
 
 const addTransactionExpenseService = async(data, user, owner) => {
   user.balance -= data.amount;
   await user.save();
   const newTransaction = await TransactionModel.create({...data, type: 'expense', owner})
-  return {status: 200, message: {
+  return {status: 201, message: {
     "newBalance": data.amount,
     "transaction": newTransaction
   }}
@@ -16,7 +16,7 @@ const addTransactionIncomeService = async(data, user, owner) => {
   user.balance += data.amount;
   await user.save();
   const newTransaction = await TransactionModel.create({...data, type: 'income', owner})
-  return {status: 200, message: {
+  return {status: 201, message: {
     "newBalance": data.amount,
     "transaction": newTransaction
   }}
@@ -25,14 +25,14 @@ const addTransactionIncomeService = async(data, user, owner) => {
 
 const getTransactionIncomeService = async () => {
   const data = await TransactionModel.find({type: 'income'})
-  const monthStats = getMonthStatistic(data);
+  const monthStats = getMonthlyStatistics(data);
   return {status: 200, message: {"incomes": data, monthStats}}
 }
 
 
 const getTransactionExpenseService = async () => {
   const data = await TransactionModel.find({type: 'expense'})
-  const monthStats = getMonthStatistic(data);
+  const monthStats = getMonthlyStatistics(data);
   return {status: 200, message: {"expense": data, monthStats}}
 }
 
@@ -52,7 +52,7 @@ const deleteTransactionService = async(_id, owner, user) => {
 
 
 const getTransactionIncomeCategoriesService = async() => {
-  const categories = []
+  const categories = [];
   for (const i of Object.values(incCategories)){
     categories.push(i);
   }

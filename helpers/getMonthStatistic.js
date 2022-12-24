@@ -1,3 +1,30 @@
+const {months} = require('./month')
+
+const getMonthlyStatistics = (data) => {
+  let monthStat = {};
+  for (let i = 1; i <= 12; i++) {
+    let total = 0;
+    const month = months[i - 1];
+    const transactions = data.filter((transaction) => {
+      let transactionMonth = transaction.date.split('-')[1]
+      let transactionYear = transaction.date.split('-')[0]
+      if(Number(transactionMonth) === i && Number(transactionYear) === new Date().getFullYear() ){
+        return true;
+      }
+      return false;
+    })
+    if(!transactions.length){
+      monthStat[month] = "N/A";
+      continue;
+    }
+    for (let transaction of transactions) {
+      total += transaction.amount
+    }
+    monthStat[month] = total;
+  }
+  return monthStat;
+}
+
 const getMonthStatistic = (data) => {
   let tDecember = 0, tNovember = 0, tOctober = 0, tSeptember = 0, tAugust = 0, tJuly = 0, tJune = 0, tMay = 0, tApril = 0, tMarch = 0, tFebruary = 0, tJanuary = 0;
   for (let i of data) {
@@ -107,6 +134,7 @@ const getNewDate = (date) => {
 
 module.exports = {
   getMonthStatistic,
+  getMonthlyStatistics,
   getAllStatistic,
   getNewDate
 }
