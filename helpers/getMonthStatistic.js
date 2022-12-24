@@ -114,6 +114,77 @@ const getAllStatistic = (data) => {
   }
 }
 
+const getAllTransactionsStatisticsByDate = (data) => {
+  let incomesData = {}, expensesData = {};
+  let incomeTotal = 0, expenseTotal = 0;
+  const incomes = data.filter((transaction) => {
+    if(transaction.type === 'income'){
+      return true
+    }
+    return false
+  })
+  if(incomes){
+    for(let i = 0; i < incomes.length; i++ ){
+      const category = incomes[i].category;
+      const description = incomes[i].description;
+      if(!incomesData[category]){
+        incomesData[category] = {
+          total: incomes[i].amount,
+          [description]: incomes[i].amount
+        }
+        incomeTotal += incomes[i].amount
+        continue;
+      }
+      if(incomesData[category] && !incomesData[category][description]){
+        incomesData[category].total += incomes[i].amount;
+        incomesData[category][description] = incomes[i].amount;
+        incomeTotal += incomes[i].amount;
+        continue;
+      }
+      if(incomesData[category] && incomesData[category][description]){
+        incomesData[category].total += incomes[i].amount;
+        incomesData[category][description] += incomes[i].amount;
+        incomeTotal += incomes[i].amount;
+      }
+    }
+  }
+  const expense = data.filter((transaction) => {
+    if(transaction.type === 'expense'){
+      return true;
+    }
+    return false;
+  })
+  if(expense){
+    for(let i = 0; i < expense.length; i++){
+      const category = expense[i].category;
+      const description = expense[i].description;
+      if(!expensesData[category]){
+        expensesData[category] = {
+          total: expense[i].amount,
+          description: expense[i].amount
+        }
+        expenseTotal += expense[i].amount
+        continue;
+      }
+      if(expensesData[category] && !expensesData[category][description]){
+        expensesData[category].total += expense[i].amount;
+        expensesData[category][description] = expense[i].amount;
+        expenseTotal += expense[i].amount;
+        continue;
+      }
+      if(expensesData[category] && expensesData[category][description]){
+        expensesData[category].total += expense[i].amount;
+        expensesData[category][description] += expense[i].amount;
+        expenseTotal += expense[i].amount;
+      }
+    }
+  }
+  return {
+    incomes: {incomeTotal, incomesData},
+    expense: {expenseTotal, expensesData}
+  }
+}
+
 const getNewDate = (date) => {
   const [year, month, day] = date.split('-');
   let lowDate, highDate;
@@ -134,7 +205,8 @@ const getNewDate = (date) => {
 
 module.exports = {
   getMonthStatistic,
-  getMonthlyStatistics,
   getAllStatistic,
+  getMonthlyStatistics,
+  getAllTransactionsStatisticsByDate,
   getNewDate
 }
