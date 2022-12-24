@@ -27,9 +27,6 @@ const Transaction = mongoose.Schema({
 });
 
 const TransactionModel = mongoose.model('transactions', Transaction);
-['PRODUCTS', 'ALCOHOL', 'ENTERTAINMENT', 'HEALTH',
- 'TRANSPORT', 'HOUSING', 'TECHNIQUE', 'COMMUNAL', 
- 'COMMUNICATION', 'SPORTS, HOBBIES', 'EDUCATION', 'OTHER']
 
 const JoiTransactionExpense = Joi.object({
   description: Joi.string().min(3).max(100).required(),
