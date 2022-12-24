@@ -50,7 +50,6 @@ const getTransactionExpenseCategoriesController = async (req, res) => {
 }
 
 const getTransactionPeriodDataController = async (req, res) => {
-  console.log(req.query);
   const {status, message } = await getTransactionPeriodDataService(req.query.date)
   res.status(status).json(message);
 }
