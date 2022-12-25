@@ -1,0 +1,164 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Kapusta API documentation",
+    "description": " Team EASY-CODE",
+    "version": "0.0.1"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:4040/api",
+      "description": "Development server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Auth",
+      "description": "Authorization endpoints"
+    }
+  ],
+  "paths": {
+    "/auth/users/register": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User registration",
+        "requestBody": {
+          "description": "Registration's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/registrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful registration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/registrationResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)"
+          },
+          "409": {
+            "description": " Email in use"
+          }
+        }
+      }
+    },
+    "/auth/users/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User registration",
+        "requestBody": {
+          "description": "Login's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/registrationRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful registration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (invalid request body)"
+          },
+          "401": {
+            "description": " Email or password is wrong"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "registrationRequest": {
+        "type": "object",
+        "required": [
+          "email",
+          "password"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "user's email",
+            "example": "mysite@ourearth.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "user's password",
+            "example": "qaz12345",
+            "minimum": 6
+          }
+        }
+      },
+      "registrationResponse": {
+        "type": "object",
+        "required": [
+          "email",
+          "id"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "user's email",
+            "example": "mysite@ourearth.com"
+          },
+          "id": {
+            "type": "string",
+            "description": "user's id",
+            "example": "63a558d49aa31804e5d84653"
+          }
+        }
+      },
+      "loginResponse": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "description": "user's token. Used to send requests",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzYTU1OGQ0OWFhMzE4MDRlNWQ4NDY1MyIsImlhdCI6MTY3MTg3NzcxMiwiZXhwIjoxNjcxOTYwNTEyfQ.OpIkVGeVgdY6FtpQ8EZFvj38PXr75IEt3Fl_sDM3diw"
+          },
+          "user": {
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "description": "user's email",
+                "example": "mysite@ourearth.com"
+              },
+              "id": {
+                "type": "string",
+                "description": "user's id",
+                "example": "63a558d49aa31804e5d84653"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

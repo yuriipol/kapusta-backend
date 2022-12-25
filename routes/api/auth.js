@@ -38,7 +38,7 @@ router.get(
   authenticateSocial.authenticate("google", {
     scope: ["email", "profile"],
     failureMessage: "Cannot login to Google, please try again later!",
-    failureRedirect: "http://localhost:3000/login/error",
+    failureRedirect: "http://localhost:3000/error",
     // successRedirect: "http://localhost:3000/home",
     session: false,
   }),
