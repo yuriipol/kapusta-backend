@@ -1,5 +1,5 @@
 const { TransactionModel } = require('../../models/transaction');
-const {getMonthStatistic,  getAllStatistic, getNewDate, getMonthlyStatistics, getAllTransactionsStatisticsByDate} = require('../../helpers/getMonthStatistic');
+const { getNewDate, getMonthlyStatistics, getAllTransactionsStatisticsByDate} = require('../../helpers/getMonthStatistic');
 const { incCategories, expCategories } = require('../../helpers/categories');
 
 const addTransactionExpenseService = async(data, user, owner) => {
