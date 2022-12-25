@@ -1,0 +1,23 @@
+const expCategories = {
+  PRODUCTS: "PRODUCTS",
+  ALCOHOL: "ALCOHOL",
+  ENTERTAINMENT: "ENTERTAINMENT",
+  HEALTH: "HEALTH",
+  TRANSPORT: "TRANSPORT",
+  FOR_HOME: "HOUSING",
+  TECHNICS: "TECHNIQUE",
+  UTILITIES: "COMMUNAL, COMMUNICATION",
+  SPORT_AND_HOBBY: "SPORTS, HOBBIES",
+  EDUCATION: "EDUCATION",
+  OTHER: "OTHER",
+}
+
+const incCategories = {
+  SALARY: "SALARY",
+  ADDITIONAL_INCOME: "ADD. INCOME",
+}
+
+module.exports = {
+  expCategories,
+  incCategories
+}

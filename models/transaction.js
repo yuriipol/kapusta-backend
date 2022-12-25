@@ -1,10 +1,8 @@
-const mongoose = require('mongoose');
+const {Schema, SchemaTypes, model} = require('mongoose');
 const Joi = require("joi");
+const {incCategories, expCategories} = require('../helpers/categories')
 
-
-
-
-const Transaction = mongoose.Schema({
+const Transaction = Schema({
   description: {
     type: String,
   },
@@ -18,7 +16,7 @@ const Transaction = mongoose.Schema({
     type: String,
   },
   owner: {
-    type: mongoose.SchemaTypes.ObjectId,
+    type: SchemaTypes.ObjectId,
     ref: 'user',
   },
   type: {
@@ -26,8 +24,7 @@ const Transaction = mongoose.Schema({
   }
 });
 
-const TransactionModel = mongoose.model('transactions', Transaction);
-
+const TransactionModel = model('transactions', Transaction);
 
 const JoiTransactionExpense = Joi.object({
   description: Joi.string().min(3).max(100).required(),
@@ -35,19 +32,19 @@ const JoiTransactionExpense = Joi.object({
   date: Joi.date().max("now").required(),
   category: Joi.string()
     .valid(
-      "Продукты",
-      "Алкоголь",
-      "Развлечения",
-      "Здоровье",
-      "Транспорт",
-      "Всё для дома",
-      "Техника",
-      "Коммуналка и связь",
-      "Спорт и хобби",
-      "Образование",
-      "Прочее"
+      expCategories.PRODUCTS,
+      expCategories.ALCOHOL,
+      expCategories.ENTERTAINMENT,
+      expCategories.HEALTH,
+      expCategories.TRANSPORT,
+      expCategories.FOR_HOME,
+      expCategories.TECHNICS,
+      expCategories.UTILITIES,
+      expCategories.SPORT_AND_HOBBY,
+      expCategories.EDUCATION,
+      expCategories.OTHER
     )
-    .min(6)
+    .min(3)
     .max(100)
     .required(),
 });
@@ -55,6 +52,14 @@ const JoiTransactionExpense = Joi.object({
 const JoiTransactionIncome = Joi.object({
   description: Joi.string().min(3).max(100).required(),
   amount: Joi.number().required(),
+  category: Joi.string()
+  .valid(
+    incCategories.SALARY,
+    incCategories.ADDITIONAL_INCOME
+  )
+  .min(3)
+  .max(100)
+  .required(),
   date: Joi.date().max('now').required()
 })
 

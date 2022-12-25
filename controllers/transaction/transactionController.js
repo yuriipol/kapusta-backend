@@ -41,16 +41,17 @@ const deleteTransactionController = async (req, res) => {
 
 
 const getTransactionIncomeCategoriesController = async (req, res) => {
-
+  const {status, message} = await getTransactionIncomeCategoriesService();
+  res.status(status).json(message)
 }
 
 
 const getTransactionExpenseCategoriesController = async (req, res) => {
-
+  const {status, message} = await getTransactionExpenseCategoriesService();
+  res.status(status).json(message)
 }
 
 const getTransactionPeriodDataController = async (req, res) => {
-  console.log(req.query);
   const {status, message } = await getTransactionPeriodDataService(req.query.date)
   res.status(status).json(message);
 }

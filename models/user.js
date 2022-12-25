@@ -26,6 +26,10 @@ const userSchema = new Schema(
       type: String,
       default: "//www.gravatar.com/avatar/93942e96f5acd83e2e047ad8fe03114d",
     },
+    balance: {
+      type: Number,
+      default: 0,
+    }
   },
   { versionKey: false, timestamps: true }
 );
