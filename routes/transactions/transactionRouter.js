@@ -15,9 +15,6 @@ const authenticate = require('../../middlewares/authenticate');
 const { JoiTransactionExpense, JoiTransactionIncome } = require("../../models/transaction");
 const router = express.Router();
 
-
-
-// router.use()
 router.use(authenticate)
 router.post('/income',[validateBody(JoiTransactionIncome)], ctrlWrapper(addIncomeController))
 router.get('/income', ctrlWrapper(getIncomeController))
