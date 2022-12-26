@@ -19,6 +19,9 @@ const googleParams = {
 };
 
 const googleCallback = async (
+  req,
+  accessToken,
+  refreshToken,
   profile,
   done
 ) => {
