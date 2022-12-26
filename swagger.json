@@ -15,6 +15,10 @@
     {
       "name": "Auth",
       "description": "Authorization endpoints"
+    },
+    {
+      "name": "Transaction",
+      "description": "Transaction endpoints"
     }
   ],
   "paths": {
@@ -47,10 +51,10 @@
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)"
+            "description": "Bad request (validate error)"
           },
           "409": {
-            "description": " Email in use"
+            "description": "Email in use"
           }
         }
       }
@@ -60,7 +64,7 @@
         "tags": [
           "Auth"
         ],
-        "summary": "User registration",
+        "summary": "User login",
         "requestBody": {
           "description": "Login's object",
           "required": true,
@@ -73,7 +77,7 @@
           }
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Successful registration",
             "content": {
               "application/json": {
@@ -84,10 +88,391 @@
             }
           },
           "400": {
-            "description": "Bad request (invalid request body)"
+            "description": "Bad request (validate error)"
           },
           "401": {
-            "description": " Email or password is wrong"
+            "description": "Email or password is wrong"
+          }
+        }
+      }
+    },
+    "/auth/users/google/callback": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Login user with google",
+        "responses": {
+          "200": {
+            "description": "Successful registration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/loginResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      }
+    },
+    "/auth/users/logout": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "User logout",
+        "responses": {
+          "200": {
+            "description": "Logout success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "message"
+                  ],
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Logout success"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Invalid user"
+          }
+        }
+      }
+    },
+    "/auth/users/balance": {
+      "patch": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "Update user`s balance",
+        "requestBody": {
+          "description": "New user`s balance",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "balanse"
+                ],
+                "properties": {
+                  "balanse": {
+                    "type": "number",
+                    "example": 1234
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful registration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/newBalanseResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (validate error)"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Invalid user"
+          }
+        }
+      }
+    },
+    "/transaction/income": {
+      "post": {
+        "tags": [
+          "Transaction"
+        ],
+        "summary": "Add user`s income",
+        "requestBody": {
+          "description": "Login's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "newIncome": {
+                    "type": "number",
+                    "description": "user`s balance",
+                    "example": 10000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/incomeResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (validate error)"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Invalid user"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "summary": "Get total income",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/incomeTotalResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Invalid user"
+          }
+        }
+      }
+    },
+    "/transaction/expense": {
+      "post": {
+        "tags": [
+          "Transaction"
+        ],
+        "summary": "Add user`s expense",
+        "requestBody": {
+          "description": "Login's object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "newExpense": {
+                    "type": "number",
+                    "description": "user`s balance",
+                    "example": 10000
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/expenseResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (validate error)"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Invalid user"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "summary": "Get total expense",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/expenseTotalResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Invalid user"
+          }
+        }
+      }
+    },
+    "/transaction/{id}": {
+      "delete": {
+        "tags": [
+          "Transaction"
+        ],
+        "summary": "Delete user`s transaction",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "description": "transaction`s id",
+            "in": "path",
+            "schema": {
+              "type": "string",
+              "example": "639ef3d3a1ba6adb9a40406d"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "newBalance": {
+                      "type": "number",
+                      "description": "user`s balance",
+                      "example": 10000
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Invalid user"
+          }
+        }
+      }
+    },
+    "/transaction/income-categories": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "summary": "Add user`s expense",
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/expenseResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (validate error)"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Invalid user"
+          }
+        }
+      }
+    },
+    "/transaction/expense-categories": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "summary": "Add user`s expense",
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/expenseResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (validate error)"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Invalid user"
+          }
+        }
+      }
+    },
+    "/transaction/period-data": {
+      "get": {
+        "tags": [
+          "Transaction"
+        ],
+        "summary": "Add user`s expense",
+        "responses": {
+          "201": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/expenseResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request (validate error)"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Invalid user"
           }
         }
       }
@@ -153,6 +538,125 @@
               "id": {
                 "type": "string",
                 "description": "user's id",
+                "example": "63a558d49aa31804e5d84653"
+              }
+            }
+          }
+        }
+      },
+      "newBalanseResponse": {
+        "type": "object",
+        "required": [
+          "email",
+          "balance"
+        ],
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "user's email",
+            "example": "mysite@ourearth.com"
+          },
+          "balance": {
+            "type": "number",
+            "description": "changed user's balance",
+            "example": 1987
+          }
+        }
+      },
+      "incomeResponse": {
+        "type": "object",
+        "properties": {
+          "newBalance": {
+            "type": "number",
+            "description": "user`s balance",
+            "example": 10000
+          },
+          "transaction": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "???",
+                "example": "income"
+              },
+              "owner": {
+                "type": "string",
+                "description": "owner of operation",
+                "example": "63a558d49aa31804e5d84653"
+              }
+            }
+          }
+        }
+      },
+      "incomeTotalResponse": {
+        "type": "object",
+        "properties": {
+          "newBalance": {
+            "type": "number",
+            "description": "user`s balance",
+            "example": 10000
+          },
+          "transaction": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "???",
+                "example": "income"
+              },
+              "owner": {
+                "type": "string",
+                "description": "owner of operation",
+                "example": "63a558d49aa31804e5d84653"
+              }
+            }
+          }
+        }
+      },
+      "expenseResponse": {
+        "type": "object",
+        "properties": {
+          "newBalance": {
+            "type": "number",
+            "description": "user`s balance",
+            "example": 10000
+          },
+          "transaction": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "???",
+                "example": "income"
+              },
+              "owner": {
+                "type": "string",
+                "description": "owner of operation",
+                "example": "63a558d49aa31804e5d84653"
+              }
+            }
+          }
+        }
+      },
+      "expenseTotalResponse": {
+        "type": "object",
+        "properties": {
+          "newBalance": {
+            "type": "number",
+            "description": "user`s balance",
+            "example": 10000
+          },
+          "transaction": {
+            "type": "object",
+            "properties": {
+              "type": {
+                "type": "string",
+                "description": "???",
+                "example": "income"
+              },
+              "owner": {
+                "type": "string",
+                "description": "owner of operation",
                 "example": "63a558d49aa31804e5d84653"
               }
             }
