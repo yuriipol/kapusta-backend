@@ -1,7 +1,5 @@
 const { TransactionModel } = require("../../models/transaction");
 const {
-  getMonthStatistic,
-  getAllStatistic,
   getNewDate,
   getMonthlyStatistics,
   getAllTransactionsStatisticsByDate,

@@ -6,7 +6,6 @@ const {
   authenticate,
   upload,
   authenticateSocial,
-  // isValidId,
 } = require("../../middlewares");
 const { schemas } = require("../../models/user");
 const router = express.Router();
