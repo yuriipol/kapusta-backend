@@ -17,12 +17,12 @@ router.post(
   ctrlWrapper(ctrl.register)
 );
 
-router.get("/users/verify/:verificationToken", ctrlWrapper(ctrl.verifyEmail));
-router.post(
-  "/users/verify",
-  validateBody(schemas.verifyEmailSchema),
-  ctrlWrapper(ctrl.resendVerifyEmail)
-);
+// router.get("/users/verify/:verificationToken", ctrlWrapper(ctrl.verifyEmail));
+// router.post(
+//   "/users/verify",
+//   validateBody(schemas.verifyEmailSchema),
+//   ctrlWrapper(ctrl.resendVerifyEmail)
+// );
 
 // signin
 router.post(
@@ -37,24 +37,15 @@ router.get(
   authenticateSocial.authenticate("google", {
     scope: ["email", "profile"],
     failureMessage: "Cannot login to Google, please try again later!",
-    failureRedirect: "http://localhost:3000/login/error",
-    // successRedirect: "http://localhost:3000/home",
+    failureRedirect: "http://localhost:3000/error",
     session: false,
   }),
   ctrlWrapper(ctrl.googleAuth)
 );
 
 router.get("/users/current", authenticate, ctrlWrapper(ctrl.getCurrent));
-// router.get("/users/:contactId", isValidId, ctrlWrapper(ctrl.getUserById));
 
 router.get("/users/logout", authenticate, ctrlWrapper(ctrl.logout));
-
-router.patch(
-  "/users",
-  authenticate,
-  validateBody(schemas.updateSchema),
-  ctrlWrapper(ctrl.updateSubscription)
-);
 
 router.patch(
   "/users/avatars",
