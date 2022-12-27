@@ -53,7 +53,7 @@ const getTransactionExpenseService = async () => {
 };
 
 const getTransactionAllService = async () => {
-  const data = await TransactionModel.find().sort({date: -1});
+  const data = await TransactionModel.find().sort({date: -1}).limit(10);
   const monthStats = getMonthlyStatistics(data);
   return { status: 200, message: { allTransactions: data, monthStats } };
 };
