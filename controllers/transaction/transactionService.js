@@ -41,13 +41,13 @@ const addTransactionIncomeService = async (data, user, owner) => {
 };
 
 const getTransactionIncomeService = async () => {
-  const data = await TransactionModel.find({ type: "income" });
+  const data = await TransactionModel.find({ type: "income" }).sort({date: -1});
   const monthStats = getMonthlyStatistics(data);
   return { status: 200, message: { incomes: data, monthStats } };
 };
 
 const getTransactionExpenseService = async () => {
-  const data = await TransactionModel.find({ type: "expense" });
+  const data = await TransactionModel.find({ type: "expense" }).sort({date: -1});
   const monthStats = getMonthlyStatistics(data);
   return { status: 200, message: { expense: data, monthStats } };
 };
