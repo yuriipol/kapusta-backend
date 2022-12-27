@@ -52,6 +52,12 @@ const getTransactionExpenseService = async () => {
   return { status: 200, message: { expense: data, monthStats } };
 };
 
+const getTransactionAllService = async () => {
+  const data = await TransactionModel.find().sort({date: -1});
+  const monthStats = getMonthlyStatistics(data);
+  return { status: 200, message: { expense: data, monthStats } };
+};
+
 const deleteTransactionService = async (_id, owner, user) => {
   const transaction = await TransactionModel.findByIdAndRemove(
     { _id, owner },
@@ -93,6 +99,7 @@ module.exports = {
   addTransactionIncomeService,
   getTransactionIncomeService,
   getTransactionExpenseService,
+  getTransactionAllService,
   deleteTransactionService,
   getTransactionIncomeCategoriesService,
   getTransactionExpenseCategoriesService,
