@@ -3,6 +3,7 @@ const {
   addTransactionExpenseService,
   getTransactionIncomeService,
   getTransactionExpenseService,
+  getTransactionAllService,
   deleteTransactionService,
   getTransactionIncomeCategoriesService,
   getTransactionExpenseCategoriesService,
@@ -33,6 +34,10 @@ const getExpenseController = async (req, res) => {
   res.status(status).json(message);
 };
 
+const getAllController = async (req, res) => {
+  const { status, message } = await getTransactionAllService();
+  res.status(status).json(message);
+};
 
 const deleteTransactionController = async (req, res) => {
   const {status, message } = await deleteTransactionService(req.params.id, req.user._id, req.user)
@@ -61,6 +66,7 @@ module.exports = {
   addExpenseController,
   getIncomeController,
   getExpenseController,
+  getAllController,
   deleteTransactionController,
   getTransactionIncomeCategoriesController,
   getTransactionExpenseCategoriesController,
