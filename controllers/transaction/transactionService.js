@@ -55,7 +55,7 @@ const getTransactionExpenseService = async () => {
 const getTransactionAllService = async () => {
   const data = await TransactionModel.find().sort({date: -1});
   const monthStats = getMonthlyStatistics(data);
-  return { status: 200, message: { expense: data, monthStats } };
+  return { status: 200, message: { allTransactions: data, monthStats } };
 };
 
 const deleteTransactionService = async (_id, owner, user) => {
