@@ -112,7 +112,7 @@ owner      |        |The operstion's owner        |is not required
 
 ***
 ### Main routes
- тут просто вказати посилання на документацію
+The documentation on endpoints can be found at the link  [documentation](http://localhost:4040/api-docs/)
 
  ##  "EASY-CODE" TEAM     **(^_^)**
 
