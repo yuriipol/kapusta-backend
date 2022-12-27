@@ -139,6 +139,32 @@
         }
       }
     },
+    "/auth/users/current": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Get user`s infirmation",
+        "responses": {
+          "200": {
+            "description": "Successful registration",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/currentUser"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Invalid user"
+          }
+        }
+      }
+    },
     "/auth/users/logout": {
       "get": {
         "tags": [
@@ -598,7 +624,7 @@
           }
         }
       },
-      "currentUser": {
+      "incomeResponse": {
         "type": "object",
         "properties": {
           "email": {
