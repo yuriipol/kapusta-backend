@@ -1,20 +1,20 @@
 const expCategories = {
-  PRODUCTS: "PRODUCTS",
-  ALCOHOL: "ALCOHOL",
-  ENTERTAINMENT: "ENTERTAINMENT",
-  HEALTH: "HEALTH",
-  TRANSPORT: "TRANSPORT",
-  FOR_HOME: "HOUSING",
-  TECHNICS: "TECHNIQUE",
-  UTILITIES: "COMMUNAL, COMMUNICATION",
-  SPORT_AND_HOBBY: "SPORTS, HOBBIES",
-  EDUCATION: "EDUCATION",
-  OTHER: "OTHER",
+  PRODUCTS: "Products",
+  ALCOHOL: "Alcohol",
+  ENTERTAINMENT: "Entertainment",
+  HEALTH: "Health",
+  TRANSPORT: "Transport",
+  FOR_HOME: "Housing",
+  TECHNICS: "Technique",
+  UTILITIES: "Communal, Communication",
+  SPORT_AND_HOBBY: "Sports, Hobbies",
+  EDUCATION: "Education",
+  OTHER: "Other",
 }
 
 const incCategories = {
-  SALARY: "SALARY",
-  ADDITIONAL_INCOME: "ADD. INCOME",
+  SALARY: "Salary",
+  ADDITIONAL_INCOME: "Add. Income",
 }
 
 module.exports = {

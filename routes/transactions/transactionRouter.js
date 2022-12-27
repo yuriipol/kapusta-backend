@@ -4,6 +4,7 @@ const {
   addExpenseController,
   getIncomeController,
   getExpenseController,
+  getAllController,
   deleteTransactionController,
   getTransactionIncomeCategoriesController,
   getTransactionExpenseCategoriesController,
@@ -20,6 +21,7 @@ router.post('/income',[validateBody(JoiTransactionIncome)], ctrlWrapper(addIncom
 router.get('/income', ctrlWrapper(getIncomeController))
 router.post('/expense',[validateBody(JoiTransactionExpense)], ctrlWrapper(addExpenseController))
 router.get('/expense', ctrlWrapper(getExpenseController))
+router.get('/all', ctrlWrapper(getAllController))
 router.delete('/:id', ctrlWrapper(deleteTransactionController))
 router.get('/income-categories', ctrlWrapper(getTransactionIncomeCategoriesController))
 router.get('/expense-categories', ctrlWrapper(getTransactionExpenseCategoriesController))
