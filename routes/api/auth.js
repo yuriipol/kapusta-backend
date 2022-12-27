@@ -32,7 +32,7 @@ router.post(
 );
 
 router.get(
-  "/users/google/callback",
+  "/users/google/login",
 
   authenticateSocial.authenticate("google", {
     scope: ["email", "profile"],
