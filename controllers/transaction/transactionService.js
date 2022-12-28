@@ -40,20 +40,20 @@ const addTransactionIncomeService = async (data, user, owner) => {
   };
 };
 
-const getTransactionIncomeService = async () => {
-  const data = await TransactionModel.find({ type: "income" }).sort({date: -1});
+const getTransactionIncomeService = async (owner) => {
+  const data = await TransactionModel.find({ type: "income", owner }).sort({date: -1});
   const monthStats = getMonthlyStatistics(data);
   return { status: 200, message: { incomes: data, monthStats } };
 };
 
-const getTransactionExpenseService = async () => {
-  const data = await TransactionModel.find({ type: "expense" }).sort({date: -1});
+const getTransactionExpenseService = async (owner) => {
+  const data = await TransactionModel.find({ type: "expense", owner }).sort({date: -1});
   const monthStats = getMonthlyStatistics(data);
   return { status: 200, message: { expense: data, monthStats } };
 };
 
-const getTransactionAllService = async () => {
-  const data = await TransactionModel.find().sort({date: -1}).limit(10);
+const getTransactionAllService = async (owner) => {
+  const data = await TransactionModel.find({owner}).sort({date: -1}).limit(10);
   const monthStats = getMonthlyStatistics(data);
   return { status: 200, message: { allTransactions: data, monthStats } };
 };
@@ -85,10 +85,10 @@ const getTransactionExpenseCategoriesService = async () => {
   return { status: 200, message: categories };
 };
 
-const getTransactionPeriodDataService = async (date) => {
+const getTransactionPeriodDataService = async (date, owner) => {
   const { lowDate, highDate } = getNewDate(date);
   const transaction = await TransactionModel.find({
-    date: { $gte: `${lowDate}`, $lte: `${highDate}` },
+    date: { $gte: `${lowDate}`, $lte: `${highDate}`, owner },
   });
   const calculating = getAllTransactionsStatisticsByDate(transaction);
   return { status: 200, message: calculating };
