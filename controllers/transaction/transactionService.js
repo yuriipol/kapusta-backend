@@ -88,7 +88,7 @@ const getTransactionExpenseCategoriesService = async () => {
 const getTransactionPeriodDataService = async (date, owner) => {
   const { lowDate, highDate } = getNewDate(date);
   const transaction = await TransactionModel.find({
-    date: { $gte: `${lowDate}`, $lte: `${highDate}`, owner },
+    date: { $gte: `${lowDate}`, $lte: `${highDate}`, }, owner
   });
   const calculating = getAllTransactionsStatisticsByDate(transaction);
   return { status: 200, message: calculating };
