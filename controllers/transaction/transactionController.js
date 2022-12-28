@@ -24,18 +24,18 @@ const addExpenseController = async (req, res) => {
 
 
 const getIncomeController = async (req, res) => {
-  const { status, message } = await getTransactionIncomeService();
+  const { status, message } = await getTransactionIncomeService(req.user._id);
   res.status(status).json(message);
 };
 
 
 const getExpenseController = async (req, res) => {
-  const { status, message } = await getTransactionExpenseService();
+  const { status, message } = await getTransactionExpenseService(req.user._id);
   res.status(status).json(message);
 };
 
 const getAllController = async (req, res) => {
-  const { status, message } = await getTransactionAllService();
+  const { status, message } = await getTransactionAllService(req.user._id);
   res.status(status).json(message);
 };
 
@@ -57,7 +57,7 @@ const getTransactionExpenseCategoriesController = async (req, res) => {
 }
 
 const getTransactionPeriodDataController = async (req, res) => {
-  const {status, message } = await getTransactionPeriodDataService(req.query.date)
+  const {status, message } = await getTransactionPeriodDataService(req.query.date, req.user._id)
   res.status(status).json(message);
 }
 
